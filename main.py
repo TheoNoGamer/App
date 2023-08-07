@@ -1,4 +1,6 @@
 import PySimpleGUI as sg
+import time
+
 from subprocess import call
 from properties import appname
 
@@ -21,6 +23,7 @@ def VerifyLogin(username, password, filepath):
     return False
 
 def open_py_file():
+    login_valied = True
     call(["python", appname])
 
 password_char = '*'
@@ -50,9 +53,10 @@ while True:
         
         if VerifyLogin(username, password, "login_data.txt"):
             print("Inloggning lyckades")
-            login_valied = True
-            print(login_valied)
             open_py_file()
+            login_valied = False
+            print(login_valied)
+            
             window.close()
             
         else:
