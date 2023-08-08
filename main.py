@@ -1,6 +1,7 @@
 import PySimpleGUI as sg
+import time
 from subprocess import call
-from properties import appname, password_char
+from properties import password_char
 
 def VerifyLogin(username, password, filepath):
     try:
@@ -20,10 +21,8 @@ def VerifyLogin(username, password, filepath):
         
     return False
 
-def open_py_file():
-    call(["python", appname])
-
 def run_application():
+    global login_valied
     layout = [
         []
         ]
@@ -38,59 +37,65 @@ def run_application():
             
         window.close()
 
-
-#password_char = '*'
-password_hidden = True
-
-login_valied = False
-
-layout = [
-    [sg.Text('Username'), sg.Input(key='-username-')],
-    [sg.Text('Password'), 
-     sg.Input(key='-password-', password_char=password_char),  
-     sg.Button('Show Password', k='-CB-', button_color=('white', 'green'))],
-    [sg.Button('Login', key="-login-")]
-]
-
-window = sg.Window('Login', layout)
-
-while True:
-    event, values = window.read()
+def run_login_system():
+    global login_valied
+    global password_char
     
-    if event == sg.WINDOW_CLOSED:
-        break
-    
-    if event == '-login-':
-        username = values['-username-']
-        password = values['-password-']
+    password_hidden = True
+    login_valied = False
+
+    layout = [
+        [sg.Text('Username'), 
+         sg.Input(key='-username-')],
         
-        if VerifyLogin(username, password, "login_data.txt"):
-            print("Inloggning lyckades")
-            login_valied = True
-            print(login_valied)
-            window.close()
-            #run_application()
-            
-        else:
-            login_valied = False 
-            print(login_valied)
-            print("Inloggning misslyckades")
-            sg.popup('Try again!')
-            
-    
-    elif event == '-CB-': 
-        login_valied = False
-        password_hidden = not password_hidden
-        if password_hidden:
-            window['-CB-'].update(text="Show Password")
-            password_char = '*'
-            #from properties import password_char
-            window['-CB-'].update(button_color=('white', 'green'))  
-        else:
-            window['-CB-'].update(text="Hide Password")
-            password_char = ''
-            window['-CB-'].update(button_color=('white', 'red')) 
+        [sg.Text('Password'), 
+        sg.Input(key='-password-', password_char=password_char),  
+        sg.Button('Show Password', k='-CB-', button_color=('white', 'green'))],
         
-        window['-password-'].update(password_char=password_char)
+        [sg.Button('Login', key="-login-")]
+    ]
 
-window.close()
+    window = sg.Window('Login', layout)
+
+    while True:
+        event, values = window.read()
+        
+        if event == sg.WINDOW_CLOSED:
+            break
+        
+        if event == '-login-':
+            username = values['-username-']
+            password = values['-password-']
+            
+            if VerifyLogin(username, password, "login_data.txt"):
+                print("Inloggning lyckades")
+                login_valied = True
+                print(login_valied)
+                window.close()
+                time.sleep(1)
+                run_application()
+                
+            else:
+                login_valied = False 
+                print(login_valied)
+                print("Inloggning misslyckades")
+                sg.popup('Try again!')
+                
+        
+        elif event == '-CB-': 
+            login_valied = False
+            password_hidden = not password_hidden
+            if password_hidden:
+                from properties import password_char
+                window['-CB-'].update(text="Show Password")
+                window['-CB-'].update(button_color=('white', 'green'))  
+            else:
+                password_char = ''
+                window['-CB-'].update(text="Hide Password")
+                window['-CB-'].update(button_color=('white', 'red')) 
+            
+            window['-password-'].update(password_char=password_char)
+
+    window.close()
+
+run_login_system()
