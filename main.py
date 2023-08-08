@@ -1,6 +1,6 @@
 import PySimpleGUI as sg
 from subprocess import call
-from properties import appname
+from properties import appname, password_char
 
 def VerifyLogin(username, password, filepath):
     try:
@@ -23,7 +23,23 @@ def VerifyLogin(username, password, filepath):
 def open_py_file():
     call(["python", appname])
 
-password_char = '*'
+def run_application():
+    layout = [
+        []
+        ]
+
+    window = sg.Window('App_Name', layout)
+
+    if login_valied == True:
+        while True:
+            event, values = window.read()
+            if event == sg.WIN_CLOSED:
+                break
+            
+        window.close()
+
+
+#password_char = '*'
 password_hidden = True
 
 login_valied = False
@@ -50,11 +66,10 @@ while True:
         
         if VerifyLogin(username, password, "login_data.txt"):
             print("Inloggning lyckades")
-            open_py_file()
             login_valied = True
             print(login_valied)
-            
             window.close()
+            #run_application()
             
         else:
             login_valied = False 
@@ -69,6 +84,7 @@ while True:
         if password_hidden:
             window['-CB-'].update(text="Show Password")
             password_char = '*'
+            #from properties import password_char
             window['-CB-'].update(button_color=('white', 'green'))  
         else:
             window['-CB-'].update(text="Hide Password")

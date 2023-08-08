@@ -1,2 +1,2 @@
-appname = "App.py"
+appname = "app.py"
 password_char = '*'
