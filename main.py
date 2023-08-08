@@ -1,7 +1,6 @@
 import PySimpleGUI as sg
 import time
 from subprocess import call
-from properties import password_char
 
 error = False
 
@@ -68,9 +67,9 @@ def run_application():
 
 def run_login_system():
     global login_valied
-    global password_char
     global error
     
+    password_char = '*'
     password_hidden = True
     login_valied = False
 
@@ -116,7 +115,7 @@ def run_login_system():
             login_valied = False
             password_hidden = not password_hidden
             if password_hidden:
-                from properties import password_char
+                password_char = '*'
                 window['-CB-'].update(text="Show Password")
                 window['-CB-'].update(button_color=('white', 'green'))  
             else:
@@ -129,4 +128,4 @@ def run_login_system():
     window.close()
 
 #The start
-#run_login_system()
+run_login_system()
