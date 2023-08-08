@@ -46,13 +46,15 @@ def the_application():
             
     window.close()
 
-def the_error():
+def the_login_error():
     global error
     
     print("Error")
     error = True
-    sg.popup_ok_cancel("An error occurred while verifying login", keep_on_top=True)
-    run_login_system()
+    popup_result = sg.popup_ok_cancel("An error occurred while verifying login", keep_on_top=True)
+    
+    if popup_result == 'OK':
+        run_login_system()
 
 def run_application():
     global login_valied
@@ -62,7 +64,7 @@ def run_application():
         the_application()
         error = False
     else:
-        the_error()
+        the_login_error()
 
 def run_login_system():
     global login_valied
@@ -97,7 +99,7 @@ def run_login_system():
             
             if VerifyLogin(username, password, userdata):
                 print("Login succeeded")
-                #login_valied = True
+                login_valied = True
                 print(login_valied)
                 window.close()
                 time.sleep(0.7)
@@ -127,4 +129,4 @@ def run_login_system():
     window.close()
 
 #The start
-run_login_system()
+#run_login_system()
