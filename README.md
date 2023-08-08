@@ -16,7 +16,7 @@ This repository contains a basic login application built with Python using PySim
 2. Install PySimpleGUI:
     pip install PySimpleGUI
 
-3. Run the code:
+3. Run the code
 
 4. Enter valid credentials to access the main window.
 
