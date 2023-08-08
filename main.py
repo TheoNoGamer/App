@@ -1,6 +1,5 @@
 import PySimpleGUI as sg
 import time
-import clipboard
 from subprocess import call
 
 error = False
