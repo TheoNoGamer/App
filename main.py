@@ -3,8 +3,10 @@ import time
 from subprocess import call
 from properties import password_char
 
-userdata = [
-    "Theo, Lidec",
+error = False
+
+userdata = [#putt usrname and password here
+    #username, password
     "SapphireUser, Diamond$123",
     "QuantumCoder, Entanglement#",
     "NebulaExplorer, Cosmic*Wander",
@@ -14,7 +16,8 @@ userdata = [
     "GalacticGourmet, TasteTheStars",
     "ChronoTraveler, TimeWarp*55",
     "AquaAdventurer, DeepSea$Dive",
-    "CelestialDreamer, DreamBig#2023"
+    "CelestialDreamer, DreamBig#2023",
+    ", "#remove for safety
 ]
 
 def VerifyLogin(username, password, userdata):
@@ -29,25 +32,42 @@ def VerifyLogin(username, password, userdata):
         
     return False
 
-def run_application():
-    global login_valied
+def the_application():
     layout = [
-        []
+        [sg.Text('test text')]
         ]
 
     window = sg.Window('App_Name', layout)
 
-    if login_valied == True:
-        while True:
-            event, values = window.read()
-            if event == sg.WIN_CLOSED:
-                break
+    while True:
+        event, values = window.read()
+        if event == sg.WIN_CLOSED:
+            break
             
-        window.close()
+    window.close()
+
+def the_error():
+    global error
+    
+    print("Error")
+    error = True
+    sg.popup_ok_cancel("An error occurred while verifying login", keep_on_top=True)
+    run_login_system()
+
+def run_application():
+    global login_valied
+    global error
+    
+    if login_valied == True:
+        the_application()
+        error = False
+    else:
+        the_error()
 
 def run_login_system():
     global login_valied
     global password_char
+    global error
     
     password_hidden = True
     login_valied = False
@@ -76,17 +96,17 @@ def run_login_system():
             password = values['-password-']
             
             if VerifyLogin(username, password, userdata):
-                print("Inloggning lyckades")
-                login_valied = True
+                print("Login succeeded")
+                #login_valied = True
                 print(login_valied)
                 window.close()
-                time.sleep(1)
+                time.sleep(0.7)
                 run_application()
                 
             else:
                 login_valied = False 
                 print(login_valied)
-                print("Inloggning misslyckades")
+                print("Login failed")
                 sg.popup('Try again!')
                 
         
