@@ -3,18 +3,26 @@ import time
 from subprocess import call
 from properties import password_char
 
-def VerifyLogin(username, password, filepath):
+userdata = [
+    "Theo, Lidec",
+    "SapphireUser, Diamond$123",
+    "QuantumCoder, Entanglement#",
+    "NebulaExplorer, Cosmic*Wander",
+    "CyberPhoenix, Firewall@987",
+    "EnchantedElf, MagicForest$",
+    "SolarSailor, Starship2023",
+    "GalacticGourmet, TasteTheStars",
+    "ChronoTraveler, TimeWarp*55",
+    "AquaAdventurer, DeepSea$Dive",
+    "CelestialDreamer, DreamBig#2023"
+]
+
+def VerifyLogin(username, password, userdata):
     try:
-        password = password + "\n"
-        
-        with open(filepath, 'r') as file:
-            lines = file.readlines()
-            
-            for line in lines:
-                fields = line.split(",")
-                
-                if fields[0] == username and fields[1] == password:
-                    return True
+        for user_info in userdata:
+            fields = user_info.split(', ')
+            if len(fields) >= 2 and fields[0] == username and fields[1] == password:
+                return True
         
     except Exception as e:
         print(e)
@@ -67,7 +75,7 @@ def run_login_system():
             username = values['-username-']
             password = values['-password-']
             
-            if VerifyLogin(username, password, "login_data.txt"):
+            if VerifyLogin(username, password, userdata):
                 print("Inloggning lyckades")
                 login_valied = True
                 print(login_valied)
