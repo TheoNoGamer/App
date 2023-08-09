@@ -31,38 +31,39 @@ def VerifyLogin(username, password, userdata):
         
     return False
 
-def the_application():
-    layout = [
-        [sg.Text('test text')]
-        ]
-
-    window = sg.Window('App_Name', layout)
-
-    while True:
-        event, values = window.read()
-        if event == sg.WIN_CLOSED:
-            break
-            
-    window.close()
-
 def the_login_error():
     global error
     
-    print("Error")
-    error = True
-    popup_result = sg.popup_ok_cancel("An error occurred while verifying login", keep_on_top=True)
-    
-    if popup_result == 'OK':
-        run_login_system()
+    if error == True:
+        print("Error is True")
+        error = False
+        popup_result = sg.popup_ok_cancel("An error occurred while verifying userdata", keep_on_top=True)
+        
+        if popup_result == 'OK':
+            run_login_system()
 
 def run_application():
     global login_valied
     global error
     
     if login_valied == True:
-        the_application()
         error = False
+        
+        layout = [
+                [sg.Text('test text')]
+                ]
+
+        window = sg.Window('App_Name', layout)
+
+        while True:
+            event, values = window.read()
+            if event == sg.WIN_CLOSED:
+                break
+                
+        window.close()
+        
     else:
+        error = True
         the_login_error()
 
 def run_login_system():
@@ -101,7 +102,7 @@ def run_login_system():
                 login_valied = True
                 print(login_valied)
                 window.close()
-                time.sleep(0.7)
+                time.sleep(0.9)
                 run_application()
                 
             else:
@@ -109,7 +110,6 @@ def run_login_system():
                 print(login_valied)
                 print("Login failed")
                 sg.popup('Try again!')
-                
         
         elif event == '-CB-': 
             login_valied = False
