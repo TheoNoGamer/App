@@ -19,18 +19,6 @@ userdata = [#putt usrname and password here
     ", "#remove for safety
 ]
 
-def VerifyLogin(username, password, userdata):
-    try:
-        for user_info in userdata:
-            fields = user_info.split(', ')
-            if len(fields) >= 2 and fields[0] == username and fields[1] == password:
-                return True
-        
-    except Exception as e:
-        print(e)
-        
-    return False
-
 def the_login_error():
     global error
     
@@ -42,12 +30,35 @@ def the_login_error():
         if popup_result == 'OK':
             run_login_system()
 
+def VerifyLogin(username, password, userdata):
+    global error
+    global login_check
+    
+    if login_check == True:
+        error = False
+        try:
+            for user_info in userdata:
+                fields = user_info.split(', ')
+                if len(fields) >= 2 and fields[0] == username and fields[1] == password:
+                    return True
+            
+        except Exception as e:
+            print(e)
+            
+        return False
+    else:
+        error = True
+        the_login_error()
+
+
+
 def run_application():
     global login_valied
     global error
     
     if login_valied == True:
         error = False
+        login_valied = False
         
         layout = [
                 [sg.Text('test text')]
@@ -64,15 +75,18 @@ def run_application():
         
     else:
         error = True
+        login_valied = False
         the_login_error()
 
 def run_login_system():
     global login_valied
     global error
+    global login_check
     
     password_char = '*'
     password_hidden = True
     login_valied = False
+    login_check = False
 
     layout = [
         [sg.Text('Username'), 
@@ -97,17 +111,23 @@ def run_login_system():
             username = values['-username-']
             password = values['-password-']
             
+            login_check = True
             if VerifyLogin(username, password, userdata):
                 print("Login succeeded")
                 login_valied = True
-                print(login_valied)
+                print(login_valied, login_check)
+                login_check = False
+                print(login_check)
                 window.close()
                 time.sleep(0.9)
                 run_application()
+                login_valied = False
+                print(login_valied)
                 
             else:
+                login_check = False
                 login_valied = False 
-                print(login_valied)
+                print(login_valied, login_check)
                 print("Login failed")
                 sg.popup('Try again!')
         
