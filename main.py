@@ -50,8 +50,6 @@ def VerifyLogin(username, password, userdata):
         error = True
         the_login_error()
 
-
-
 def run_application():
     global login_valied
     global error
@@ -94,7 +92,7 @@ def run_login_system():
         
         [sg.Text('Password'), 
         sg.Input(key='-password-', password_char=password_char),  
-        sg.Button('Show Password', k='-CB-', button_color=('white', 'green'))],
+        sg.Button('Show Password', k='-CB-', button_color=('white', 'green'), size = (9,2))],
         
         [sg.Button('Login', key="-login-")]
     ]
@@ -122,7 +120,7 @@ def run_login_system():
                 time.sleep(0.9)
                 run_application()
                 login_valied = False
-                print(login_valied)
+                print("login_valied is", login_valied)
                 
             else:
                 login_check = False
