@@ -59,16 +59,19 @@ def run_application():
         login_valied = False
         
         layout = [
-                [sg.Text('test text')]
-                ]
+            [sg.Text('Welcome to the App!', font=("Helvetica", 20))],
+            [sg.Text('This is a simple application window.', font=("Helvetica", 14))],
+            [sg.Button('Close')]
+        ]
 
-        window = sg.Window('App_Name', layout)
+        window = sg.Window('App_Name', layout, finalize=True)
 
         while True:
             event, values = window.read()
-            if event == sg.WIN_CLOSED:
+
+            if event == sg.WINDOW_CLOSED or event == 'Close':
                 break
-                
+
         window.close()
         
     else:
@@ -96,7 +99,7 @@ def run_login_system():
         sg.Input(key='-password-', password_char=password_char),  
         sg.Button('Show Password', k='-CB-', button_color=('white', 'green'), size = (9,2))],
         
-        [sg.Button('Login', key="-login-")]
+        [sg.Button('Close'), sg.Button('Login', key="-login-")]
     ]
 
     window = sg.Window('Login', layout)
@@ -104,7 +107,7 @@ def run_login_system():
     while True:
         event, values = window.read()
         
-        if event == sg.WINDOW_CLOSED:
+        if event == sg.WINDOW_CLOSED or event == 'Close':
             break
         
         if event == '-login-':
