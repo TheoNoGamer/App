@@ -86,11 +86,13 @@ def run_login_system():
     login_valied = False
     login_check = False
 
+    text_size = (7, 1)
+    
     layout = [
-        [sg.Text('Username'), 
+        [sg.Text('Username', size = text_size), 
          sg.Input(key='-username-')],
         
-        [sg.Text('Password'), 
+        [sg.Text('Password', size = text_size), 
         sg.Input(key='-password-', password_char=password_char),  
         sg.Button('Show Password', k='-CB-', button_color=('white', 'green'), size = (9,2))],
         
