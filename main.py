@@ -1,6 +1,5 @@
 import PySimpleGUI as sg
 import time
-from subprocess import call
 
 error = False
 
